@@ -1,9 +1,9 @@
 var test = require("tape");
-var through = require("../");
+var via = require("../");
 var PassThrough = require("stream").PassThrough;
 
-test(".through(func) - utf8", function(t){
-    var stream = through(function(data){
+test("via(func) - utf8", function(t){
+    var stream = via(function(data){
         return data + "yeah?";
     });
     
@@ -18,8 +18,8 @@ test(".through(func) - utf8", function(t){
     stream.end("clive");
 });
 
-test(".through(func) - buffer", function(t){
-    var stream = through(function(data){
+test("via(func) - buffer", function(t){
+    var stream = via(function(data){
         return Buffer.concat([ data, Buffer([ 2 ])]);
     });
     

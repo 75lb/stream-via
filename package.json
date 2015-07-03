@@ -6,7 +6,13 @@
   "repository": "https://github.com/75lb/stream-via.git",
   "license": "MIT",
   "main": "./lib/stream-via.js",
-  "keywords": [ "through", "stream", "process", "chunk", "transform" ],
+  "keywords": [
+    "through",
+    "stream",
+    "process",
+    "chunk",
+    "transform"
+  ],
   "engines": {
     "node": ">=0.10.0"
   },
@@ -15,6 +21,7 @@
     "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md; echo"
   },
   "devDependencies": {
+    "jsdoc-to-markdown": "^1.1.1",
     "tape": "^4.0.0"
   }
 }
