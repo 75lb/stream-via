@@ -1,0 +1,20 @@
+{
+  "name": "stream-via",
+  "author": "Lloyd Brookes <75pound@gmail.com>",
+  "version": "0.0.0",
+  "description": "stream-via",
+  "repository": "https://github.com/75lb/stream-via.git",
+  "license": "MIT",
+  "main": "./lib/stream-via.js",
+  "keywords": [ "through", "stream", "process", "chunk", "transform" ],
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "tape test/*.js",
+    "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md; echo"
+  },
+  "devDependencies": {
+    "tape": "^4.0.0"
+  }
+}
