@@ -5,10 +5,10 @@
 
 <a name="module_stream-via"></a>
 ## stream-via
-<a name="exp_module_stream-via--via"></a>
-### via(transformFunction, [options]) ⇒ <code>external:Transform</code> ⏏
-returns a Transform stream which processes each chunk with the supplied throughFunction
+Process each chunk of a stream via the supplied function.
 
+<a name="exp_module_stream-via--via"></a>
+### via(transformFunction, [options]) ⇒ <code>[Duplex](https://nodejs.org/api/stream.html#stream_class_stream_duplex)</code> ⏏
 **Kind**: Exported function  
 
 | Param | Type | Description |
