@@ -1,6 +1,7 @@
 var test = require("tape");
 var via = require("../");
 var PassThrough = require("stream").PassThrough;
+var bufferEquals = require("buffer-equal");
 
 test("via(func) - utf8", function(t){
     var stream = via(function(data){
@@ -26,7 +27,7 @@ test("via(func) - buffer", function(t){
     stream.on("readable", function(){
         var chunk = this.read();
         if (chunk){
-            t.ok(chunk.equals(Buffer([ 1, 2 ])));
+            t.ok(bufferEquals(chunk, Buffer([ 1, 2 ])));
             t.end();
         }
     });
