@@ -33,3 +33,14 @@ test('via(func) - buffer', function (t) {
 
   stream.end(Buffer([ 1 ]))
 })
+
+test('through function throws, via emits exception', function (t) {
+  t.plan(1)
+  var stream = via(function () {
+    throw new Error('test')
+  })
+  stream.on('error', function (err) {
+    t.strictEqual(err.message, 'test')
+  })
+  stream.end('data')
+})
