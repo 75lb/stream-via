@@ -20,7 +20,9 @@ test('via(func) - utf8', function (t) {
 
 test('via.async(func) - utf8', function (t) {
   var stream = via.async(function (data, enc, done) {
-    process.nextTick(() => done(null, data + 'yeah?'))
+    process.nextTick(function () {
+      done(null, data + 'yeah?')
+    })
   })
 
   stream.on('readable', function () {
