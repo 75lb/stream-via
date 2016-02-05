@@ -37,7 +37,7 @@ Process each chunk of a stream via the supplied function.
 
 - chunk <code>buffer</code> | <code>string</code>
 - enc <code>string</code>
-- done <code>function</code>
+- done <code>function</code> - only used in `via.async`, call it like so: `done(err, returnValue)`.
 
 
 * * *
