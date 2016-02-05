@@ -12,11 +12,11 @@ Process each chunk of a stream via the supplied function. Useful for meddling in
 Replace all instances of the `a` character with `4`.
 
 ```js
-const via = require('../')
+const via = require('stream-via')
 const fs = require('fs')
 
 process.stdin
-  .pipe(via(function (chunk){
+  .pipe(via(function (chunk) {
     return chunk.toString().replace(/a/g, '4')
   }))
   .pipe(process.stdout)
