@@ -1,7 +1,7 @@
 {
   "name": "stream-via",
   "author": "Lloyd Brookes <75pound@gmail.com>",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "stream-via",
   "repository": "https://github.com/75lb/stream-via.git",
   "license": "MIT",
