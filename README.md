@@ -4,10 +4,34 @@
 [![Dependency Status](https://david-dm.org/75lb/stream-via.svg)](https://david-dm.org/75lb/stream-via)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
+# stream-via
+Process each chunk of a stream via the supplied function. Useful for meddling inside a stream pipeline. Works in both string/Buffer and object modes.
+
+## Synopsis
+
+Replace all instances of the `a` character with `4`.
+
+```js
+const via = require('../')
+const fs = require('fs')
+
+process.stdin
+  .pipe(via(function (chunk){
+    return chunk.toString().replace(/a/g, '4')
+  }))
+  .pipe(process.stdout)
+```
+
+Output:
+```
+$ echo 'twat' | node example/simple.js
+tw4t
+```
+
+# API
+
 <a name="module_stream-via"></a>
 ## stream-via
-Process each chunk of a stream via the supplied function.
-
 
 * [stream-via](#module_stream-via)
     * [via(throughFunction, [options])](#exp_module_stream-via--via) ⇒ <code>[Duplex](https://nodejs.org/api/stream.html#stream_class_stream_duplex)</code> ⏏
@@ -38,6 +62,7 @@ Process each chunk of a stream via the supplied function.
 - chunk <code>buffer</code> | <code>string</code>
 - enc <code>string</code>
 - done <code>function</code> - only used in `via.async`, call it like so: `done(err, returnValue)`.
+
 
 
 * * *
