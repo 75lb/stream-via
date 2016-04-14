@@ -31,6 +31,7 @@ tw4t
 # API
 
 <a name="module_stream-via"></a>
+
 ## stream-via
 
 * [stream-via](#module_stream-via)
@@ -39,6 +40,7 @@ tw4t
         * [~throughFunction](#module_stream-via--via..throughFunction) : <code>function</code>
 
 <a name="exp_module_stream-via--via"></a>
+
 ### via(throughFunction, [options]) ⇒ <code>[Duplex](https://nodejs.org/api/stream.html#stream_class_stream_duplex)</code> ⏏
 **Kind**: Exported function  
 **Params**
@@ -47,6 +49,7 @@ tw4t
 - [options] <code>object</code> - passed to the returned stream constructor
 
 <a name="module_stream-via--via.async"></a>
+
 #### via.async(throughFunction, [options]) ⇒ <code>[Duplex](https://nodejs.org/api/stream.html#stream_class_stream_duplex)</code>
 **Kind**: static method of <code>[via](#exp_module_stream-via--via)</code>  
 **Params**
@@ -55,6 +58,7 @@ tw4t
 - [options] <code>object</code> - passed to the returned stream constructor
 
 <a name="module_stream-via--via..throughFunction"></a>
+
 #### via~throughFunction : <code>function</code>
 **Kind**: inner typedef of <code>[via](#exp_module_stream-via--via)</code>  
 **Params**
