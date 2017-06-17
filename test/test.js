@@ -135,8 +135,8 @@ runner.test('via: objectMode, through func returns undefined', function () {
   stream.on('readable', function () {
     counter.pass()
     const chunk = this.read()
-    if (chunk) {
-      a.deepEqual(chunk, { received: true })
+    if (chunk !== null) {
+      a.strictEqual(chunk, undefined)
     } else {
       a.strictEqual(chunk, null)
     }
