@@ -24,6 +24,20 @@ runner.test('via(func) - utf8', function () {
   return counter.promise
 })
 
+runner.test('via(func) - utf8: through func returns undefined', function () {
+  const stream = via(data => undefined)
+  const counter = Counter.create(1)
+
+  stream.on('readable', function () {
+    counter.pass()
+    const chunk = this.read()
+    a.strictEqual(chunk, null)
+  })
+  stream.setEncoding('utf8')
+  stream.end('clive')
+  return counter.promise
+})
+
 runner.test('via.async(func) - utf8', function () {
   const counter = Counter.create(2)
   const stream = via.async((data, enc, done) => {
@@ -99,6 +113,24 @@ runner.test('via: objectMode', function () {
     object.received = true
     return object
   }, { objectMode: true })
+
+  stream.on('readable', function () {
+    counter.pass()
+    const chunk = this.read()
+    if (chunk) {
+      a.deepEqual(chunk, { received: true })
+    } else {
+      a.strictEqual(chunk, null)
+    }
+  })
+
+  stream.end({})
+  return counter.promise
+})
+
+runner.test('via: objectMode, through func returns undefined', function () {
+  const counter = Counter.create(2)
+  const stream = via(object => undefined, { objectMode: true })
 
   stream.on('readable', function () {
     counter.pass()
