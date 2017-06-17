@@ -2,7 +2,7 @@
   "name": "stream-via",
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "1.0.4",
-  "description": "stream-via",
+  "description": "Process each chunk of a stream via the supplied function",
   "repository": "https://github.com/75lb/stream-via.git",
   "license": "MIT",
   "main": "./lib/stream-via.js",
@@ -14,15 +14,16 @@
     "transform"
   ],
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4"
   },
   "scripts": {
-    "test": "tape test/*.js",
+    "test": "test-runner test/*.js",
     "docs": "jsdoc2md -t jsdoc2md/README.hbs --member-index-format list --param-list-format list lib/*.js > README.md; echo"
   },
   "devDependencies": {
-    "buffer-equal": "^1.0.0",
     "jsdoc-to-markdown": "^3.0.0",
-    "tape": "^4.6.3"
+    "safe-buffer": "^5.1.0",
+    "test-runner": "^0.4.0",
+    "test-runner-counter": "^0.1.0"
   }
 }

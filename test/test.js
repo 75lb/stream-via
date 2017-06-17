@@ -1,105 +1,115 @@
-var test = require('tape')
-var via = require('../')
-var bufferEquals = require('buffer-equal')
+const via = require('../')
+const TestRunner = require('test-runner')
+const a = require('assert')
+const Counter = require('test-runner-counter')
+const Buffer = require('safe-buffer').Buffer
 
-test('via(func) - utf8', function (t) {
-  var stream = via(function (data) {
-    return data + 'yeah?'
-  })
+const runner = new TestRunner()
+
+runner.test('via(func) - utf8', function () {
+  const stream = via(data => data + 'yeah?')
+  const counter = Counter.create(2)
 
   stream.on('readable', function () {
-    var chunk = this.read()
+    counter.pass()
+    const chunk = this.read()
     if (chunk) {
-      t.strictEqual(chunk, 'cliveyeah?')
-      t.end()
+      a.strictEqual(chunk, 'cliveyeah?')
+    } else {
+      a.strictEqual(chunk, null)
     }
   })
   stream.setEncoding('utf8')
   stream.end('clive')
+  return counter.promise
 })
 
-test('via.async(func) - utf8', function (t) {
-  var stream = via.async(function (data, enc, done) {
-    process.nextTick(function () {
+runner.test('via.async(func) - utf8', function () {
+  const counter = Counter.create(2)
+  const stream = via.async((data, enc, done) => {
+    process.nextTick(() => {
       done(null, data + 'yeah?')
     })
   })
 
   stream.on('readable', function () {
-    var chunk = this.read()
+    counter.pass()
+    const chunk = this.read()
     if (chunk) {
-      t.strictEqual(chunk, 'cliveyeah?')
-      t.end()
+      a.strictEqual(chunk, 'cliveyeah?')
+    } else {
+      a.strictEqual(chunk, null)
     }
   })
   stream.setEncoding('utf8')
   stream.end('clive')
+  return counter.promise
 })
 
-test('via(func) - buffer', function (t) {
-  var stream = via(function (data) {
-    return Buffer.concat([ data, Buffer([ 2 ]) ])
+runner.test('via(func) - buffer', function () {
+  const counter = Counter.create(2)
+  const stream = via(function (data) {
+    return Buffer.concat([ data, Buffer.from([ 2 ]) ])
   })
 
   stream.on('readable', function () {
-    var chunk = this.read()
+    counter.pass()
+    const chunk = this.read()
     if (chunk) {
-      t.ok(bufferEquals(chunk, Buffer([ 1, 2 ])))
-      t.end()
+      a.ok(chunk.equals(Buffer.from([ 1, 2 ])))
+    } else {
+      a.strictEqual(chunk, null)
     }
   })
 
-  stream.end(Buffer([ 1 ]))
+  stream.end(Buffer.from([ 1 ]))
+  return counter.promise
 })
 
-test('through function throws, via emits exception', function (t) {
-  t.plan(1)
-  var stream = via(function () {
+runner.test('through function throws, via emits exception', function () {
+  const counter = Counter.create(1)
+  const stream = via(function () {
     throw new Error('test')
   })
   stream.on('error', function (err) {
-    t.strictEqual(err.message, 'test')
+    counter.pass()
+    a.strictEqual(err.message, 'test')
   })
   stream.end('data')
+  return counter.promise
 })
 
-test('async through function returns err, via emits exception', function (t) {
-  t.plan(1)
-  var stream = via.async(function (chunk, enc, done) {
+runner.test('async through function returns err, via emits exception', function () {
+  const counter = Counter.create(1)
+  const stream = via.async(function (chunk, enc, done) {
     done(new Error('test'))
   })
   stream.on('error', function (err) {
-    t.strictEqual(err.message, 'test')
+    counter.pass()
+    a.strictEqual(err.message, 'test')
   })
   stream.end('data')
+  return counter.promise
 })
 
-test('via: objectMode', function (t) {
-  t.plan(1)
+runner.test('via: objectMode', function () {
+  const counter = Counter.create(2)
 
-  var stream = via(function (object) {
+  const stream = via(function (object) {
     object.received = true
     return object
   }, { objectMode: true })
 
   stream.on('readable', function () {
-    var chunk = this.read()
+    counter.pass()
+    const chunk = this.read()
     if (chunk) {
-      t.deepEquals(chunk, { received: true })
+      a.deepEqual(chunk, { received: true })
+    } else {
+      a.strictEqual(chunk, null)
     }
   })
 
   stream.end({})
-})
-
-test('via: readableObjectMode', function (t) {
-  var stream = via(
-    function (buf) {
-      t.strictEqual(buf.toString(), 'yeah')
-      return {}
-    },
-    { readableObjectMode: true }
-  )
-  stream.end('yeah')
-  t.end()
+  return counter.promise
 })
